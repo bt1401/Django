@@ -1,0 +1,36 @@
+{% extends 'mysite/base.html' %}
+{% block contentthang %}
+    <h1 class="h1-admin-site">WELCOME ADMIN ---  
+        <a href="{% url 'mysite:home' %}">VIEW SITE /</a>
+        <a href="{% url 'mysite:login' %}">LOG OUT/</a>
+        <a href="{% url 'mysite:add_post' %}">ADD POST</a>
+    </h1>
+  
+    <table>
+        <caption>Danh sách Bài viết</caption>
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Author</th>
+                <th>Post</th>
+                <th colspan="2">Action</th>
+            </tr>
+        </thead>
+            {% for post in object_list %}
+                <tbody>
+                    <tr>
+                        <td style="width: 20%;"><a href="{% url 'mysite:test-view' post.pk %}">{{post.title}}</a></td>
+                        <td style="width: 20%;" >{{post.author.first_name}} {{post.author.last_name}}</td>
+                        <td class="td_body">{{post.body_text|safe|linebreaks}}</td>
+                        <td style="width: 10%;" ><button><a href="{% url 'mysite:update_post' post.pk %}">edit</a></button> </td>
+                        <td style="width: 10%;"><button><a href="{% url 'mysite:delete_post' post.pk %}">delete</a></button></td>
+                    </tr>
+                </tbody>
+            {% endfor %}
+        
+     
+    </table>    
+         
+         
+     
+{% endblock%}

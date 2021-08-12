@@ -1,0 +1,10 @@
+{% extends 'mysite/base.html'%}
+
+{% block contentthang %}
+{% csrf_token %}
+    <div class="notice">
+        <h2>Bạn đã nhập thành công!</h2>
+        <a href="{% url 'mysite:admin-site' %}"><h2>Xem các bài viết</h2></a>
+       
+    </div
+{% endblock %}

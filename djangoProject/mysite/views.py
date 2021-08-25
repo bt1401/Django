@@ -7,12 +7,11 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
-
-
+from bs4 import BeautifulSoup
+import requests
 # Create your views here.
 
 def get_html_content(request):
-    import requests
     USER_AGENT = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/44.0.2403.157 Safari/537.36"
     LANGUAGE = "en-US,en;q=0.5"
     session = requests.Session()
@@ -25,9 +24,7 @@ def get_html_content(request):
 
 def home(request):
     result = None
-    
     html_content = get_html_content(request)
-    from bs4 import BeautifulSoup
     soup = BeautifulSoup(html_content, 'html.parser')
     result = dict()
     result['title'] = soup.find("span", attrs={"class": "tit"}).text

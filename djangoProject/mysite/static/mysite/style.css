@@ -98,7 +98,7 @@
             display: block;
             float: left;
             width: 80%;
-            height: 500px;
+            height: fit-content;
             background-color: #81d4fa;
         }
         iframe{

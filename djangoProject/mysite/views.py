@@ -8,14 +8,40 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
 
+
 # Create your views here.
 
+def get_html_content(request):
+    import requests
+    USER_AGENT = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/44.0.2403.157 Safari/537.36"
+    LANGUAGE = "en-US,en;q=0.5"
+    session = requests.Session()
+    session.headers['User-Agent'] = USER_AGENT
+    session.headers['Accept-Language'] = LANGUAGE
+    session.headers['Content-Language'] = LANGUAGE
+    html_content = session.get(f'https://xe.baogiaothong.vn/mg5-sap-ra-mat-viet-nam-co-phien-ban-scorpio-the-thao-d521996.html').text
+    return html_content
+
+
+def home(request):
+    result = None
+    
+    html_content = get_html_content(request)
+    from bs4 import BeautifulSoup
+    soup = BeautifulSoup(html_content, 'html.parser')
+    result = dict()
+    result['title'] = soup.find("span", attrs={"class": "tit"}).text
+    result['time_post'] = soup.find("span", attrs={"class": "sb-tpic clrGre"}).text
+    result['body_text']= soup.find("div", attrs={"class": "content-body bodyArt"}).text
+    return render(request, 'mysite/home.html', {'result': result})
+    
+
 class IndexClass(View):
-    def get(self, requset):
+    def get(self, request):
         webname = "TNews"
         nav = ["Health", "Sport", "Fashion"]
         context = {"name":webname, "navi":nav}
-        return render(requset, "mysite/index.html", context)
+        return render(request, "mysite/index.html", context)
 
 class HomeClass(View):
     def get(self, request):

@@ -18,7 +18,7 @@ def get_html_content(request):
     session.headers['User-Agent'] = USER_AGENT
     session.headers['Accept-Language'] = LANGUAGE
     session.headers['Content-Language'] = LANGUAGE
-    html_content = session.get(f'https://xe.baogiaothong.vn/mg5-sap-ra-mat-viet-nam-co-phien-ban-scorpio-the-thao-d521996.html').text
+    html_content = session.get(f'https://baomoi.com/').text
     return html_content
 
 
@@ -27,10 +27,10 @@ def home(request):
     html_content = get_html_content(request)
     soup = BeautifulSoup(html_content, 'html.parser')
     result = dict()
-    result['title'] = soup.find("span", attrs={"class": "tit"}).text
-    result['time_post'] = soup.find("span", attrs={"class": "sb-tpic clrGre"}).text
-    result['body_text']= soup.find("div", attrs={"class": "content-body bodyArt"}).text
-    return render(request, 'mysite/home.html', {'result': result})
+    result['title'] = soup.find("h4", attrs={"class": "bm_P"}).text
+    result['time_post'] = soup.find("div", attrs={"class": "bm_U"}).text
+    #result['body_text']= soup.find("div", attrs={"class": "evtBxsp sp clrGra"}).text
+    return render(request, 'mysite/scrape.html', {'result': result})
     
 
 class IndexClass(View):

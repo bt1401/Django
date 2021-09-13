@@ -22,10 +22,11 @@ def scrape(request):
   for article in News:
     linkx = article.find('a', {"class":"sc-1out364-0 hMndXN js_link"})
     link=linkx['href']
-    titlex = article.find('h2', {"class":"sc-759qgu-0 iRbzKE cw4lnv-6 bqAYXy"})
-    title = titlex.text
+    title = article.find('h2', {"class":"sc-759qgu-0 iRbzKE cw4lnv-6 bqAYXy"}).text
+    #text = article.find('div', {"class":"b8i51y-0 gQKrq cw4lnv-7 gHzqDU"}).text
     new_headline = Headline()
     new_headline.title = title
+    #new_headline.text = text
     new_headline.url = link
     new_headline.save()
   return redirect("../")

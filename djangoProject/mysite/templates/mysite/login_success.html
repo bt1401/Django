@@ -3,8 +3,8 @@
 {% block contentthang %}
 {% csrf_token %}
     <div class="notice">
-        <h2>Xin chào! Bạn đã đăng nhập thành công</h2>
-        <a href="{% url 'mysite:admin-site' %}"><h4>Đi đến trang Admin</h4></a>
+        <h2>Hello! Logged in successfully</h2>
+        <a href="{% url 'mysite:admin-site' %}"><h4>Go to Admin site</h4></a>
     </div
 
 {% endblock %}

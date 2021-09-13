@@ -1,23 +1,14 @@
+{% extends 'mysite/base.html' %}
 
-    {% if result %}
-    
+{% block contentthang %}
+<h1>FROM THE ONION SITE -----  <a href="{% url 'mysite:scrape' %}" class="load">LOAD NEWS</a><br/></h1>
+    {% if object_list %}
+        {% for object in object_list %}
             <div class = posts>
-                <h1 style="text-align: center">{{ result.title }}</h1>
-                <p> {{ result.body_text|safe|linebreaks}}</p>
-                <a href="https://xe.baogiaothong.vn/mg5-sap-ra-mat-viet-nam-co-phien-ban-scorpio-the-thao-d521996.html" target="_blank">Link bài viết</a><br/>
-                <small style="float: right; margin-right:1%;">Người đăng: {{item.author}} -- Ngày: {{ result.time_post }}</small>
+                <a href="{{object.url}}" target="blank"><h2 class="card-title">{{object.title}}</h2></a>
+                
+                
             </div>
-     
+        {% endfor %}
     {% endif %}
-
-    {% if result %}
-    
-    <div class = posts>
-        <h1 style="text-align: center">{{ result.title }}</h1>
-        <p> {{ result.body_text|safe|linebreaks}}</p>
-        <a href="https://xe.baogiaothong.vn/mg5-sap-ra-mat-viet-nam-co-phien-ban-scorpio-the-thao-d521996.html" target="_blank">Link bài viết</a><br/>
-        <small style="float: right; margin-right:1%;">Người đăng: {{item.author}} -- Ngày: {{ result.time_post }}</small>
-    </div>
-
-{% endif %}
-
+{% endblock%}

@@ -95,11 +95,36 @@
         }
         .posts{
             margin: 30px 50px;
+            padding: 2% 2% 2% 2%;
             display: block;
             float: left;
-            width: 80%;
+            width: 90%;
             height: fit-content;
-            background-color: #81d4fa;
+            background-color: rgba(83, 204, 255, 0.619);
+            border-radius: 10px;
+        }
+        .posts h1{
+            color: rgb(0, 0, 0);
+            font-size: 200% ;
+        }
+        .posts p{
+            font-size: 150%;
+        }
+        .posts small{
+            float: right;
+            margin-right: 1%;
+            font-size: larger ;
+            border: 1px solid rgb(127, 127, 127) ;
+            padding: 1%;
+            border-radius: 5px;
+            background-color: #41c0ff8b;
+        }
+        .posts a{
+            text-decoration: none;
+            color: black;
+        }
+        .posts a:hover{
+            color: red;
         }
         iframe{
             width: 800px;
@@ -107,12 +132,24 @@
             display: block;
            margin: 5px 20px;
         }
+        .load{
+            color: rgba(0, 144, 184, 0.904);
+        }
+        .load:hover{
+            color: rgb(0, 0, 0);
+            background-color: rgb(143, 244, 255);
+            border-radius: 5px;
+        }
         .footer{
             padding: 1em;
             color: white;
             background-color: black;
-            clear: left;
             text-align: center;
+            float: inline-end;
+            clear: both;
+            position: relative;
+            height: fit-content;
+            margin-top: -200px;
         }
 /*-------------------------------------------------------*/
         /* login form */
@@ -146,7 +183,7 @@
         .button{
             font-size: 30px;
             font-weight: bold;
-            margin-left: 33%;
+            margin-left: 40%;
             margin-top: 3%;
             border-radius: 7%;
             background-color: #cecccc;

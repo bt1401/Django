@@ -3,8 +3,7 @@
 {% block contentthang %}
 {% csrf_token %}
     <div class="notice">
-        <h2>Xin lỗi! Bạn nhập sai dữ liệu, vui lòng nhập lại</h2>
-        <a href="{% url 'mysite:add_post' %}"><h2>Nhập lại</h2></a>
-       
+        <h2>Sorry! You entered the wrong data, please re-enter</h2>
+        <a href="{% url 'mysite:add_post' %}"><h2>Retype</h2></a>
     </div
 {% endblock %}

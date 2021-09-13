@@ -4,9 +4,9 @@
     <div class="post-form">
     <form action="{% url 'mysite:add_post' %}", method="POST" enctype="multipart/form-data">
         {% csrf_token %}
-        <h2>Đăng bài báo</h2>
+        <h2>AĐ NEW POST</h2>
         <div class="post-control">
-            <h4>Tiêu đề</h4>
+            <h4>Title</h4>
             {{fm.title}}
         </div>
 
@@ -16,15 +16,15 @@
         </div>
         
         <div class="post-control">
-            <h4>Bài báo</h4>
+            <h4>Ảticle</h4>
             {{fm.body_text}}
         </div>
         
         <div class="post-control">
-            <h4>Ngày đăng</h4>
+            <h4>Post date</h4>
             {{fm.date}}
         </div>
-        <input type="submit" value="Thêm bài viết" class="add-post">
+        <input type="submit" value="Add post" class="add-post">
     </form>
     </div>
 {% endblock %}

@@ -18,5 +18,15 @@ class Title(models.Model):
     def get_absolute_url(self):
         #return reverse("mysite:test-view", args=(str(self.id)))
         return reverse('mysite:admin-site')
+
+#-----------------------------------------------------------
+
+class Headline(models.Model):
+    title = models.CharField(max_length=200)
+    text = models.TextField()
+    url = models.TextField()
+    
+    def __str__(self):
+        return self.title
     
 

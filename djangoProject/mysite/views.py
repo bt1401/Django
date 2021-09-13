@@ -7,39 +7,40 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
-from bs4 import BeautifulSoup
+#from bs4 import BeautifulSoup
 import requests
+
+from django.shortcuts import render, redirect
+from bs4 import BeautifulSoup as BSoup
+from.models import Headline
 # Create your views here.
 
-def get_html_content(request):
-    USER_AGENT = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/44.0.2403.157 Safari/537.36"
-    LANGUAGE = "en-US,en;q=0.5"
-    session = requests.Session()
-    session.headers['User-Agent'] = USER_AGENT
-    session.headers['Accept-Language'] = LANGUAGE
-    session.headers['Content-Language'] = LANGUAGE
-    html_content = session.get(f'https://baomoi.com/').text
-    return html_content
+def scrape(request):
+  Headline.objects.all().delete()
+  session = requests.Session()
+  session.headers = {"User-Agent": "Googlebot/2.1 (+http://www.google.com/bot.html)"}
+  url = "https://www.theonion.com/latest"
+  content = session.get(url).content
+  soup = BSoup(content, "html.parser")
+  News = soup.find_all('div', {"class":"cw4lnv-11 dFCKPx"})
+  for article in News:
+    linkx = article.find('a', {"class":"sc-1out364-0 hMndXN js_link"})
+    link=linkx['href']
+    titlex = article.find('h2', {"class":"sc-759qgu-0 iRbzKE cw4lnv-6 bqAYXy"})
+    title = titlex.text
+    new_headline = Headline()
+    new_headline.title = title
+    new_headline.url = link
+    new_headline.save()
+  return redirect("../")
 
 
-def home(request):
-    result = None
-    html_content = get_html_content(request)
-    soup = BeautifulSoup(html_content, 'html.parser')
-    result = dict()
-    result['title'] = soup.find("h4", attrs={"class": "bm_P"}).text
-    result['time_post'] = soup.find("div", attrs={"class": "bm_U"}).text
-    #result['body_text']= soup.find("div", attrs={"class": "evtBxsp sp clrGra"}).text
-    return render(request, 'mysite/scrape.html', {'result': result})
+def news_list(request):
+    headlines = Headline.objects.all()[::-1]
+    context = {'object_list': headlines,}
+    return render(request, "mysite/scrape.html", context)
     
-
-class IndexClass(View):
-    def get(self, request):
-        webname = "TNews"
-        nav = ["Health", "Sport", "Fashion"]
-        context = {"name":webname, "navi":nav}
-        return render(request, "mysite/index.html", context)
-
+    
 class HomeClass(View):
     def get(self, request):
         list_title = Title.objects.all()
@@ -77,7 +78,7 @@ class AddPost(LoginRequiredMixin,View):
         if request.user.has_perm('mysite.add_post'):
             f.save()
         else:
-            return HttpResponse('khong co quyen')
+            return HttpResponse('You do not have access!')
         return render(request, 'mysite/add_success.html')
 
 class AdminView(ListView):

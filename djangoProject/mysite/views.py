@@ -1,18 +1,14 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.views import View
-from.models import Title
+from.models import Title, Headline
 from.forms import PostForm
 from django.contrib.auth import authenticate, login 
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
-#from bs4 import BeautifulSoup
 import requests
-
-from django.shortcuts import render, redirect
-from bs4 import BeautifulSoup as BSoup
-from.models import Headline
+from bs4 import BeautifulSoup 
 # Create your views here.
 
 def scrape(request):
@@ -21,7 +17,7 @@ def scrape(request):
   session.headers = {"User-Agent": "Googlebot/2.1 (+http://www.google.com/bot.html)"}
   url = "https://www.theonion.com/latest"
   content = session.get(url).content
-  soup = BSoup(content, "html.parser")
+  soup = BeautifulSoup(content, "html.parser")
   News = soup.find_all('div', {"class":"cw4lnv-11 dFCKPx"})
   for article in News:
     linkx = article.find('a', {"class":"sc-1out364-0 hMndXN js_link"})

@@ -5,7 +5,12 @@
         {% for item in baiviet %}
             <div class = posts>
                 <h1 style="text-align: center">{{item.title}}</h1>
-                <p> {{item.body_text|safe|linebreaks}}</p>
+                <div class="post-img">
+                    <img src="{{item.image}}" alt="" />
+                </div>
+                <div class="text-post">
+                    <p> {{item.body_text|safe|linebreaks}}</p>
+                </div>
                 <small>Author: {{item.author}} -- Date: {{item.date}}</small>
             </div>
         {% endfor %}

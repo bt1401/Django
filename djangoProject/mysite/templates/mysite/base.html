@@ -4,13 +4,12 @@
     {% load static %}
     <meta charset="UTF-8">
     <title>Web News</title>
-   
     <link rel="stylesheet" href="{% static 'mysite/style.css' %}">
 </head>
 
 <body>
     <header>
-        <div class="header">
+        <div class="header-post">
             <a href="{% url 'mysite:home'%}">
                 <div class="logo">
                     <img src="{% static 'images/logo.png' %}">
@@ -31,8 +30,10 @@
             <div class="login"><a href="{% url 'mysite:login'%}">Log in</a></div>
         </div>
     </header>
+    <div class="banner"></div>
     <section>
         <div class="noidung">
+            
             {% block contentscrape %}
             {%  endblock %}
 
@@ -42,17 +43,42 @@
     </section>
 
     <aside>
-        <p style="font-weight: bold; ">Links</p>
-
-        <img src="{% static 'images/cambridge.jpg' %}" />
-        <img src="{% static 'images/mitsd.jpg' %}" />
-        <img src="{% static 'images/chicago.png' %}" />
-        <img src="{% static 'images/oxford.png' %}" />
-        
+        <div id="slideshow">
+            <div class="slide-wrapper">
+              <div class="slide"><img src="{% static 'mysite/images/bg6.jpg' %}"></div>
+              
+            </div>
+        </div>
+          
     </aside>
 
     <div class="footer">
         <footer>Copy@Right_BuiThang&#169;</footer>
     </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+    <script>
+       $(document).ready(function(){
+            $(window).scroll(function(){
+                if($(this).scrollTop()){
+                    $('header').addClass('sticky');
+                }else{
+                    $('header').removeClass('sticky');
+                }
+            });
+       });
+    </script>
+
+    <script>
+        $(document).ready(function(){
+             $(window).scroll(function(){
+                 if($(this).scrollTop()){
+                     $('aside').addClass('sticky');
+                 }else{
+                     $('aside').removeClass('sticky');
+                 }
+             });
+        });
+     </script>
 </body>
 </html>

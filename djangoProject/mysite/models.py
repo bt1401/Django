@@ -8,7 +8,7 @@ class Title(models.Model):
     title = models.CharField(max_length=100)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     body_text = models.TextField()
-    #image = models.ImageField(null=True, blank=True, upload_to="images/")
+    image = models.ImageField(null=True, blank=True, upload_to="images/", default=None)
     date = models.DateTimeField()
 
 
@@ -25,6 +25,9 @@ class Headline(models.Model):
     title = models.CharField(max_length=200)
     text = models.TextField()
     url = models.TextField()
+    image = models.URLField(null=True, blank=True)
+    author = models.TextField()
+    time = models.TextField()
     
     def __str__(self):
         return self.title

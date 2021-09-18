@@ -5,43 +5,60 @@
             background-size: cover;
             background-repeat: no-repeat;
             overflow: auto;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 
         }
         a{
             text-decoration: none;
         }
  /*------------------------------------------------------*/
-        .header{
-            padding: 2% 2% 2% 2% ;
-            background-image: url("images/bg4.jpg") ;
-            background-attachment: fixed;
-            background-size: cover;
-            background-repeat: no-repeat;
-            overflow: auto;
+        .header-post{
+            display: flex;
+            position: fixed;
+            justify-content: center;
+            width: 98%;
+            top: 1;
+            left: 1;
+            padding: 10px 0px;
+            transition: all 0.6s ease-in-out;
         }
+        header.sticky .header-post{
+            background: rgba(83, 203, 255, 0.891);
+            box-shadow: 0 5px 20px 10px gray;
+            padding: 0 25px 0 0;
+            width: 97%;
+        }
+        header.sticky .menu{
+            color: black;
+        }
+/*------------------------------------------------------*/
         .logo{
             float: left;
             display: block;
-            width: 20%;
+            width: 33%;
+            margin-left: 10%;
 
         }
         .logo img{
-            width:50%;
+            width:140%;
             float: left;
         }
 /*------------------------------------------------------*/
         .menu{
             margin-top: 1%;
-            width: 70%;
+            margin-right: 10%;
+            width: 100%;
             float: left;
-            font-size: 30px;
             color: #FFF;
+            
         }
         .menu ul li{
             float: left;
+            font-size: large;
             padding:6px 7px ;
             color: #003366;
             font-weight: bold;
+            text-transform: uppercase;
         }
         .menu ul{
             list-style-type: none;
@@ -59,15 +76,28 @@
             content: "";
         }
 /*------------------------------------------------------*/
+        .banner{
+            background: url("images/bg4.jpg");
+            min-height: 150px;
+            width: 100%;
+        }
+/*------------------------------------------------------*/
         .login{
-            float: right;
-            font-size: 30px;
+            float: left;
             font-weight: bold;
-            margin-top: 3%;
+            margin-top: 2%;
+            margin-right: 1%;
+            width: 10%;
+            height: fit-content;
         }
 
         .login a{
+            display: block;
             text-decoration: none;
+            text-align: center;
+            color: black;
+            font-size: larger;
+            
         }
         
         .login:hover{
@@ -81,18 +111,43 @@
             width: 75%;
             height: auto;
         }
-
+/*------------------------------------------------------*/
         aside{
             display: block;
             float: left;
-            width: 20%;
+            width: 24%;
             height: auto;
-
+            margin-top: 1%;
+            margin-bottom: 5%;
+            transition: all 0.6s ease-in-out;
+           
         }
-        aside image{
-            width: 50px;
-            height: 30px;
-        }
+        #slideshow {
+            overflow: hidden;
+            height: 480px;
+            width: 100%;
+            margin: 0 auto;
+          }
+         .slide-wrapper {
+            width: 100%;
+            -webkit-animation: slide 10s ease infinite;
+          }
+         
+         @-webkit-keyframes slide {
+            10% {margin-left: 0px;}
+            20% {margin-left: -40%;}
+            30% {margin-left: -80%;}
+            40% {margin-left: -120%;}
+            50% {margin-left: -160%;}
+          }
+          aside.sticky #slideshow{
+            position: fixed;
+            width: 23.7%;
+            margin-bottom: 2%;
+          }
+         
+    
+/*------------------------------------------------------------------*/        
         .posts{
             margin: 30px 50px;
             padding: 2% 2% 2% 2%;
@@ -105,15 +160,13 @@
         }
         .posts h1{
             color: rgb(0, 0, 0);
-            font-size: 200% ;
         }
         .posts p{
-            font-size: 150%;
+            font-size: large;
         }
         .posts small{
             float: right;
             margin-right: 1%;
-            font-size: larger ;
             border: 1px solid rgb(127, 127, 127) ;
             padding: 1%;
             border-radius: 5px;
@@ -125,6 +178,19 @@
         }
         .posts a:hover{
             color: red;
+        }
+        
+        .post-img{
+            width: 60%;
+            float: left;
+            margin-left: 1%;
+            margin-right: 1%;
+        }
+        .post-img img{
+            width: 100%;
+            display: block;
+            margin-right: 1%;
+        
         }
         iframe{
             width: 800px;
@@ -188,7 +254,7 @@
             border-radius: 7%;
             background-color: #cecccc;
         }
-
+/*----------------------------------------------------------------------*/
         .post-form{
             
         }
@@ -217,9 +283,9 @@
             margin-top: 10%;
             margin-bottom: 10%;
             background-color: #cecccc;
-
         }
-
+        
+/*-------------------------------------*/
 
         .notice{
             float: left;
@@ -281,3 +347,17 @@
             display: block;
             max-height: 80px;
         }
+
+/*-----------------------------------*/
+        .scrape-post{
+            width: 60%;
+            float: left;
+        }
+        .image-post{
+            width: 35%;
+            float: left;
+            margin-left: 1%;
+        }
+        .image-post img{
+            width: 100%;
+            display: block;

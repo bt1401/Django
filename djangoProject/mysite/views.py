@@ -15,21 +15,42 @@ def scrape(request):
   Headline.objects.all().delete()
   session = requests.Session()
   session.headers = {"User-Agent": "Googlebot/2.1 (+http://www.google.com/bot.html)"}
-  url = "https://www.theonion.com/latest"
+  url = "https://vietnamnet.vn/vn/thoi-su/"
   content = session.get(url).content
   soup = BeautifulSoup(content, "html.parser")
-  News = soup.find_all('div', {"class":"cw4lnv-11 dFCKPx"})
+  News = soup.find_all('div', {"class":"clearfix item"})
   for article in News:
-    linkx = article.find('a', {"class":"sc-1out364-0 hMndXN js_link"})
+    linkx = article.find('a', {"class":"m-t-5 w-240 d-ib thumb left m-r-20"})
     link=linkx['href']
-    title = article.find('h2', {"class":"sc-759qgu-0 iRbzKE cw4lnv-6 bqAYXy"}).text
-    #text = article.find('div', {"class":"b8i51y-0 gQKrq cw4lnv-7 gHzqDU"}).text
+
+    imagex = article.find('img', {"class":"lazy"})
+    image = imagex['src']
+
+    titlex = article.find('a', {"class":"f-18 title"})
+    title = titlex.text
+  
+    authorx = article.find('a', {"class":"box-subcate-style4-namecate"})
+    author = authorx.text
+
+    timex = article.find('span', {"class":"time"})
+    time = timex.text
+
+    textx = article.find('div', {"class":"lead"})
+    text = textx.text
+
     new_headline = Headline()
     new_headline.title = title
-    #new_headline.text = text
+    new_headline.image = image
+    new_headline.author = author
+    new_headline.time = time
+    new_headline.text = text
     new_headline.url = link
     new_headline.save()
-  return redirect("../")
+
+  headlines = Headline.objects.all()[::-1]
+  context = {'object_list': headlines,}
+  return render(request, "mysite/scrape.html", context)
+  
 
 
 def news_list(request):

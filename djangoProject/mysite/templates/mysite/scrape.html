@@ -1,13 +1,19 @@
 {% extends 'mysite/base.html' %}
 
 {% block contentthang %}
-<h1>FROM THE ONION SITE -----  <a href="{% url 'mysite:scrape' %}" class="load">LOAD NEWS</a><br/></h1>
+<h1>FROM THE OTHER SITE -----  <a href="{% url 'mysite:scrape' %}" class="load">LOAD NEWS</a><br/></h1>
     {% if object_list %}
         {% for object in object_list %}
             <div class = posts>
-                <a href="{{object.url}}" target="blank"><h2 class="card-title">{{object.title}}</h2></a>
-                <p>{{object.text}}</p>
-                
+                <div class="scrape-post">
+                    <h2 class="card-title">{{object.title}}</h2>
+                    <p>Đăng bởi: {{object.author}} ---  Thời gian: {{object.time}}</p>
+                    <h4>{{object.text}}</h4>
+                    <a href="{{object.url}}" target="blank">Link of artical</a>
+                </div>
+                <div class="image-post">
+                    <img class="" src = "{{ object.image }}">
+                </div>
             </div>
         {% endfor %}
     {% endif %}

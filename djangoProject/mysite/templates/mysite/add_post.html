@@ -4,7 +4,7 @@
     <div class="post-form">
     <form action="{% url 'mysite:add_post' %}", method="POST" enctype="multipart/form-data">
         {% csrf_token %}
-        <h2>AĐ NEW POST</h2>
+        <h2>ADD NEW POST</h2>
         <div class="post-control">
             <h4>Title</h4>
             {{fm.title}}
@@ -16,7 +16,12 @@
         </div>
         
         <div class="post-control">
-            <h4>Ảticle</h4>
+            <h4>Image</h4>
+            {{fm.image}}
+        </div>
+        
+        <div class="post-control">
+            <h4>Article</h4>
             {{fm.body_text}}
         </div>
         

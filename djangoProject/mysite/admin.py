@@ -1,11 +1,10 @@
 from django.contrib import admin
-from .models import Title
+from .models import Headline, Title
 
 
 # Register your models here.
 admin.site.register(Title)
-#admin.site.register(User)
-#admin.site.register(SuperUser)
-#admin.site.register(UserManager)
+admin.site.register(Headline)
+
 
 

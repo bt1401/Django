@@ -7,9 +7,9 @@
             <div class = posts>
                 <div class="scrape-post">
                     <h2 class="card-title">{{object.title}}</h2>
-                    <p>Đăng bởi: {{object.author}} ---  Thời gian: {{object.time}}</p>
-                    <h4>{{object.text}}</h4>
-                    <a href="{{object.url}}" target="blank">Link of artical</a>
+                    <p class="author-time">Đăng bởi: {{object.author}} ---  Thời gian: {{object.time}}</p>
+                    <h3>{{object.text}}</h3>
+                    <a href="{{object.url}}" target="blank" class="link-artical">Link của bài viết</a>
                 </div>
                 <div class="image-post">
                     <img class="" src = "{{ object.image }}">

@@ -27,6 +27,8 @@
             box-shadow: 0 5px 20px 10px gray;
             padding: 0 25px 0 0;
             width: 97%;
+            height: min-content;
+            border-radius: 10px;
         }
         header.sticky .menu{
             color: black;
@@ -361,3 +363,20 @@
         .image-post img{
             width: 100%;
             display: block;
+        }
+        .author-time{
+            font-size: smaller;
+            width: fit-content;
+            font-style: italic;
+            padding: 1px;
+        }
+        .link-artical{
+            text-decoration: none;
+            border: 1px solid black;
+            border-radius: 5px;
+            padding: 4px;
+        }
+        .link-artical:hover{
+            background-color: #ffffff;
+            color: white;
+        }

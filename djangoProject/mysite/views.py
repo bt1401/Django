@@ -44,7 +44,7 @@ def scrape(request):
     new_headline.author = author
     new_headline.time = time
     new_headline.text = text
-    new_headline.url = link
+    new_headline.url = "https://vietnamnet.vn/"+link
     new_headline.save()
 
   headlines = Headline.objects.all()[::-1]

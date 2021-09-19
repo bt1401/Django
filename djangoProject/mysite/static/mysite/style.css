@@ -16,29 +16,35 @@
             display: flex;
             position: fixed;
             justify-content: center;
-            width: 98%;
-            top: 1;
-            left: 1;
+            width: 100%;
+            top: 0;
+            left: 0;
             padding: 10px 0px;
             transition: all 0.6s ease-in-out;
         }
         header.sticky .header-post{
             background: rgba(83, 203, 255, 0.891);
             box-shadow: 0 5px 20px 10px gray;
-            padding: 0 25px 0 0;
-            width: 97%;
+            width: 100%;
             height: min-content;
-            border-radius: 10px;
+            padding: 0 0 10px 0 ;
         }
         header.sticky .menu{
             color: black;
+        }
+        
+        header.sticky .logo{
+            width: 24%;
+            margin-left: 20%;
+            margin-top: 2%;
         }
 /*------------------------------------------------------*/
         .logo{
             float: left;
             display: block;
             width: 33%;
-            margin-left: 10%;
+            margin-left: 15%;
+            transition: all 0.6s ease-in-out;
 
         }
         .logo img{
@@ -52,6 +58,7 @@
             width: 100%;
             float: left;
             color: #FFF;
+            height: fit-content;
             
         }
         .menu ul li{
@@ -61,6 +68,8 @@
             color: #003366;
             font-weight: bold;
             text-transform: uppercase;
+            margin:0 2% 0 2%;
+            transition: all 0.3s ease-in-out;
         }
         .menu ul{
             list-style-type: none;
@@ -71,6 +80,7 @@
             background-color: #c5e8ef;
             font-size: larger;
             color:#003366;
+            box-shadow: 0 5px 9px 0 gray;
         }
         .menu:after{
             clear: both;
@@ -87,10 +97,11 @@
         .login{
             float: left;
             font-weight: bold;
-            margin-top: 2%;
+            margin-top: 3%;
             margin-right: 1%;
             width: 10%;
-            height: fit-content;
+            height: max-content;
+            transition: all 0.3s ease-in-out;
         }
 
         .login a{
@@ -103,7 +114,8 @@
         }
         
         .login:hover{
-            background-color: #0b5ed7;
+            background-color: #1b76ff;
+            box-shadow: 0 5px 9px 0 gray;
         }
 /*------------------------------------------------------*/
         section{
@@ -378,5 +390,6 @@
         }
         .link-artical:hover{
             background-color: #ffffff;
-            color: white;
+            box-shadow: 0 4px 9px 0 gray;
+            transition: all 0.3s ease-in-out;
         }

@@ -6,13 +6,15 @@
         {% for object in object_list %}
             <div class = posts>
                 <div class="scrape-post">
-                    <h2 class="card-title">{{object.title}}</h2>
+                    <a href="{{object.url}}" target="blank"  class="title-link"><h2 class="card-title">{{object.title}}</h2></a>
                     <p class="author-time">Đăng bởi: {{object.author}} ---  Thời gian: {{object.time}}</p>
                     <h3>{{object.text}}</h3>
                     <a href="{{object.url}}" target="blank" class="link-artical">Link của bài viết</a>
                 </div>
                 <div class="image-post">
-                    <img class="" src = "{{ object.image }}">
+                    <a href="{{object.url}}" target="blank"  class="a-link">
+                        <img class="" src = "{{ object.image }}">
+                    </a>
                 </div>
             </div>
         {% endfor %}

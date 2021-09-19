@@ -128,12 +128,10 @@
 /*------------------------------------------------------*/
         aside{
             display: block;
-            float: left;
+            float: right;
             width: 24%;
             height: auto;
-            margin-top: 1%;
-            margin-bottom: 5%;
-            transition: all 0.6s ease-in-out;
+            margin: 1% 1% 5% auto;
            
         }
         #slideshow {

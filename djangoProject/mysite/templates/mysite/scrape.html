@@ -6,7 +6,7 @@
         {% for object in object_list %}
             <div class = posts>
                 <div class="scrape-post">
-                    <a href="{{object.url}}" target="blank"  class="title-link"><h2 class="card-title">{{object.title}}</h2></a>
+                    <a href="{% url 'mysite:scrape_detail' %}" "  class="title-link"><h2 class="card-title">{{object.title}}</h2></a>
                     <p class="author-time">Đăng bởi: {{object.author}} ---  Thời gian: {{object.time}}</p>
                     <h3>{{object.text}}</h3>
                     <a href="{{object.url}}" target="blank" class="link-artical">Link của bài viết</a>

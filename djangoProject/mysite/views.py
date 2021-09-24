@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.views import View
-from.models import Title, Headline
+from.models import Title, Headline, Artical
 from.forms import PostForm
 from django.contrib.auth import authenticate, login 
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -12,53 +12,83 @@ from bs4 import BeautifulSoup
 # Create your views here.
 
 def scrape(request):
-  Headline.objects.all().delete()
-  session = requests.Session()
-  session.headers = {"User-Agent": "Googlebot/2.1 (+http://www.google.com/bot.html)"}
-  url = "https://vietnamnet.vn/vn/thoi-su/"
-  content = session.get(url).content
-  soup = BeautifulSoup(content, "html.parser")
-  News = soup.find_all('div', {"class":"clearfix item"})
-  for article in News:
-    linkx = article.find('a', {"class":"m-t-5 w-240 d-ib thumb left m-r-20"})
-    link=linkx['href']
+    Headline.objects.all().delete()
+    session = requests.Session()
+    session.headers = {"User-Agent": "Googlebot/2.1 (+http://www.google.com/bot.html)"}
+    url = "https://vietnamnet.vn/vn/thoi-su/"
+    content = session.get(url).content
+    soup = BeautifulSoup(content, "html.parser")
+    News = soup.find_all('div', {"class":"clearfix item"})
+    for article in News:
+        linkx = article.find('a', {"class":"m-t-5 w-240 d-ib thumb left m-r-20"})
+        link=linkx['href']
 
-    imagex = article.find('img', {"class":"lazy"})
-    image = imagex['src']
+        imagex = article.find('img', {"class":"lazy"})
+        image = imagex['src']
 
-    titlex = article.find('a', {"class":"f-18 title"})
-    title = titlex.text
-  
-    authorx = article.find('a', {"class":"box-subcate-style4-namecate"})
-    author = authorx.text
+        titlex = article.find('a', {"class":"f-18 title"})
+        title = titlex.text
+    
+        authorx = article.find('a', {"class":"box-subcate-style4-namecate"})
+        author = authorx.text
 
-    timex = article.find('span', {"class":"time"})
-    time = timex.text
+        timex = article.find('span', {"class":"time"})
+        time = timex.text
 
-    textx = article.find('div', {"class":"lead"})
-    text = textx.text
+        textx = article.find('div', {"class":"lead"})
+        text = textx.text
 
-    new_headline = Headline()
-    new_headline.title = title
-    new_headline.image = image
-    new_headline.author = author
-    new_headline.time = time
-    new_headline.text = text
-    new_headline.url = "https://vietnamnet.vn/"+link
-    new_headline.save()
+        new_headline = Headline()
+        new_headline.title = title
+        new_headline.image = image
+        new_headline.author = author
+        new_headline.time = time
+        new_headline.text = text
+        new_headline.url = "https://vietnamnet.vn/"+link
+        new_headline.save()
 
-  headlines = Headline.objects.all()[::-1]
-  context = {'object_list': headlines,}
-  return render(request, "mysite/scrape.html", context)
-  
-
+    headlines = Headline.objects.all()[::-1]
+    context = {'object_list': headlines,}
+    return render(request, "mysite/scrape.html", context)
 
 def news_list(request):
     headlines = Headline.objects.all()[::-1]
     context = {'object_list': headlines,}
     return render(request, "mysite/scrape.html", context)
+
+def scrape_detail(request):
+    session = requests.Session()
+    session.headers = {"User-Agent": "Googlebot/2.1 (+http://www.google.com/bot.html)"}
+    url = "https://vietnamnet.vn//vn/thoi-su/phan-sao-nam-ngoi-ghe-giam-doc-cam-ket-truoc-tet-nop-het-tien-khac-phuc-776606.html"
+    content = session.get(url).content
+    soup = BeautifulSoup(content, "html.parser")
+    News = soup.find_all('div', {"class":"ArticleDetail w-660 d-ib"})
+    for artical in News:
+        result = dict()
+       
+        result['image'] = artical.find("img", {"class": ""})['src']
     
-    
+        result['title'] = artical.find("h1", {"class": "title f-22 c-3e"}).text
+
+        result['text'] = artical.find("p", {"class": ""}).text
+
+        result['author'] = artical.find("strong", {"class": ""}).text
+
+        result['time'] = artical.find("span", {"class": "ArticleDate"}).text
+
+    if not Artical.objects.filter(title=result['title']):
+        ig = Artical()
+        ig.title =  result['title']
+        ig.image = result['image']
+        ig.author = result['author']
+        ig.time = result['time']
+        ig.text = result['text']
+        ig.save()
+        return render(request, 'mysite/scrape_detail.html', {'object_list': result})
+    else:
+        return render(request, 'mysite/scrape_detail.html', {'object_list': result})
+   
+   
 class HomeClass(View):
     def get(self, request):
         list_title = Title.objects.all()

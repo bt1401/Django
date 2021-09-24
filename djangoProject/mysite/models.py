@@ -31,5 +31,18 @@ class Headline(models.Model):
     
     def __str__(self):
         return self.title
+
+#---------------------------------------------------------
+
+class Artical(models.Model):
+    title = models.CharField(max_length=200)
+    text = models.TextField()
+    image = models.URLField(null=True, blank=True)
+    author = models.TextField()
+    time = models.TextField()
+    
+    def __str__(self):
+        return self.title
+
     
 

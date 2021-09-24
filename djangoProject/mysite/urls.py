@@ -15,6 +15,7 @@ urlpatterns = [
     path('delete/<int:pk>/remove', DeletePost.as_view(), name="delete_post"),
     path('scrape/', views.scrape, name="scrape"),
     path('reloaded/', views.news_list, name="another-web"),
+    path('scrape_detail/', views.scrape_detail, name="scrape_detail"),
 
     
     

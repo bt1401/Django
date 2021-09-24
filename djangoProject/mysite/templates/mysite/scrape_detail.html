@@ -1,0 +1,18 @@
+{% extends 'mysite/base.html' %}
+
+{% block contentthang %}
+    {% if object_list %}   
+        <div class = posts>
+            <h1 style="text-align: center">{{ object_list.title }}</h1>   
+            <div class="post-img">
+                <img src="{{object_list.image}}" alt="" />
+            </div>
+            <div class="text-post">
+                <p> {{object_list.text|safe|linebreaks}}</p>
+            </div>
+            <small>Author: {{object_list.author}} -- Date: {{object_list.time}}</small>
+        </div>
+    {% endif %}
+{% endblock%}
+
+

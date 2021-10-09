@@ -5,11 +5,16 @@
     {% if object_list %}
         {% for object in object_list %}
             <div class = posts>
-                <div class="scrape-post">
-                    <a href="{% url 'mysite:scrape_detail' %}" "  class="title-link"><h2 class="card-title">{{object.title}}</h2></a>
+                <div class="scrape-post">   
+                    <a class="title-link" ><h2 class="card-title">{{object.title}}</h2></a>
                     <p class="author-time">Đăng bởi: {{object.author}} ---  Thời gian: {{object.time}}</p>
                     <h3>{{object.text}}</h3>
-                    <a href="{{object.url}}" target="blank" class="link-artical">Link của bài viết</a>
+                    <form method="post" action="">
+                        {% csrf_token %}
+                        <!--<a class="link-artical" name="link" id="link" href="{% url 'mysite:scrape_detail' %}">{{object.url}}</a>-->
+                        <input type="url" name="link" id="link" value="{{object.url}}" required="required">
+                        <input type="submit" value="Post Detail">
+                    </form>
                 </div>
                 <div class="image-post">
                     <a href="{{object.url}}" target="blank"  class="a-link">

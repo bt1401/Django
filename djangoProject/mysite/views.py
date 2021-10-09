@@ -1,3 +1,5 @@
+from django import urls
+from django.db.models.fields import URLField
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.views import View
@@ -50,44 +52,53 @@ def scrape(request):
     headlines = Headline.objects.all()[::-1]
     context = {'object_list': headlines,}
     return render(request, "mysite/scrape.html", context)
-
+''' 
 def news_list(request):
     headlines = Headline.objects.all()[::-1]
     context = {'object_list': headlines,}
-    return render(request, "mysite/scrape.html", context)
+    return render(request, "mysite/scrape.html", context) '''
 
-def scrape_detail(request):
-    session = requests.Session()
-    session.headers = {"User-Agent": "Googlebot/2.1 (+http://www.google.com/bot.html)"}
-    url = "https://vietnamnet.vn//vn/thoi-su/phan-sao-nam-ngoi-ghe-giam-doc-cam-ket-truoc-tet-nop-het-tien-khac-phuc-776606.html"
-    content = session.get(url).content
-    soup = BeautifulSoup(content, "html.parser")
-    News = soup.find_all('div', {"class":"ArticleDetail w-660 d-ib"})
-    for artical in News:
-        result = dict()
-       
-        result['image'] = artical.find("img", {"class": ""})['src']
-    
-        result['title'] = artical.find("h1", {"class": "title f-22 c-3e"}).text
+class Scrape(View):
+    def get(self, request):
+        headlines = Headline.objects.all()[::-1]
+        context = {'object_list': headlines,}
+        return render(request, "mysite/scrape.html", context)
 
-        result['text'] = artical.find("p", {"class": ""}).text
+    def post(self, request):
+        list_link = Headline.objects.values_list('url', flat=True)
+        link = request.POST.get('link')
+        if (link in list_link):
+            session = requests.Session()
+            session.headers = {"User-Agent": "Googlebot/2.1 (+http://www.google.com/bot.html)"}
+            url = link
+            content = session.get(url).content
+            soup = BeautifulSoup(content, "html.parser")
+            News = soup.find_all('div', {"class":"ArticleDetail w-660 d-ib"})
+            for artical in News:
+                result = dict()
+            
+                result['image'] = artical.find("img", {"class": ""})['src']
+            
+                result['title'] = artical.find("h1", {"class": "title f-22 c-3e"}).text
 
-        result['author'] = artical.find("strong", {"class": ""}).text
+                result['text'] = artical.find("div", {"class": "ArticleContent"}).text
 
-        result['time'] = artical.find("span", {"class": "ArticleDate"}).text
+                result['author'] = artical.find("strong", {"class": ""}).text
 
-    if not Artical.objects.filter(title=result['title']):
-        ig = Artical()
-        ig.title =  result['title']
-        ig.image = result['image']
-        ig.author = result['author']
-        ig.time = result['time']
-        ig.text = result['text']
-        ig.save()
-        return render(request, 'mysite/scrape_detail.html', {'object_list': result})
-    else:
-        return render(request, 'mysite/scrape_detail.html', {'object_list': result})
-   
+                result['time'] = artical.find("span", {"class": "ArticleDate"}).text
+
+            if not Artical.objects.filter(title=result['title']):
+                ig = Artical()
+                ig.title =  result['title']
+                ig.image = result['image']
+                ig.author = result['author']
+                ig.time = result['time']
+                ig.text = result['text']
+                ig.save()
+                return render(request, 'mysite/scrape_detail.html', {'object_list': result})
+            else:
+                return render(request, 'mysite/scrape_detail.html', {'object_list': result})
+            
    
 class HomeClass(View):
     def get(self, request):

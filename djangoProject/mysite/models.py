@@ -35,8 +35,6 @@ class Headline(models.Model):
 #---------------------------------------------------------
 
 class Artical(models.Model):
-    id = models.IntegerField(primary_key=True)
-    url = models.TextField()
     title = models.CharField(max_length=200)
     text = models.TextField()
     image = models.URLField(null=True, blank=True)

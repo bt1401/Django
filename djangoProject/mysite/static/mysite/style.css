@@ -394,3 +394,12 @@
             transition: all 0.3s ease-in-out;
             
         }
+        .submit-btn{
+            font-size: larger ;
+            border: none;
+            background-color: rgba(83, 204, 255, 0.619);;
+        }
+        .submit-btn:hover{
+            background-color: #ffffff;
+            transition: all 0.3s ease-in-out;
+        }

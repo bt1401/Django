@@ -11,9 +11,8 @@
                     <h3>{{object.text}}</h3>
                     <form method="post" action="">
                         {% csrf_token %}
-                        <!--<a class="link-artical" name="link" id="link" href="{% url 'mysite:scrape_detail' %}">{{object.url}}</a>-->
-                        <input type="url" name="link" id="link" value="{{object.url}}" required="required">
-                        <input type="submit" value="Post Detail">
+                        <input type="hidden" name="link" id="link" value="{{object.url}}" required="required" >
+                        <a class="link-artical"><input type="submit" value="Post Detail" class="submit-btn"></a>
                     </form>
                 </div>
                 <div class="image-post">

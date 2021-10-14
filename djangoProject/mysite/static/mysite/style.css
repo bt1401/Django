@@ -383,10 +383,13 @@
             padding: 1px;
         }
         .link-artical{
+            font-size: 20px ;
             text-decoration: none;
             border: 1px solid black;
             border-radius: 5px;
             padding: 4px;
+            float: left;
+            margin-left: 2%;
         }
         .link-artical:hover{
             background-color: #ffffff;
@@ -395,7 +398,7 @@
             
         }
         .submit-btn{
-            font-size: larger ;
+            font-size: 20px ;
             border: none;
             background-color: rgba(83, 204, 255, 0.619);;
         }
@@ -403,3 +406,4 @@
             background-color: #ffffff;
             transition: all 0.3s ease-in-out;
         }
+        

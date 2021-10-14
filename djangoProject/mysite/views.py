@@ -1,7 +1,7 @@
 from django import urls
 from django.db.models.fields import URLField
 from django.shortcuts import render, redirect
-from django.http import HttpResponse
+from django.http import HttpResponse, request
 from django.views import View
 from.models import Title, Headline, Artical
 from.forms import PostForm
@@ -51,8 +51,8 @@ def scrape(request):
 
     headlines = Headline.objects.all()[::-1]
     context = {'object_list': headlines,}
-    return render(request, "mysite/scrape.html", context)
-''' 
+    return render(request, "mysite/scrape.html", context) 
+'''  
 def news_list(request):
     headlines = Headline.objects.all()[::-1]
     context = {'object_list': headlines,}
@@ -60,6 +60,7 @@ def news_list(request):
 
 class Scrape(View):
     def get(self, request):
+        #Artical.objects.all().delete()
         headlines = Headline.objects.all()[::-1]
         context = {'object_list': headlines,}
         return render(request, "mysite/scrape.html", context)
@@ -67,6 +68,7 @@ class Scrape(View):
     def post(self, request):
         list_link = Headline.objects.values_list('url', flat=True)
         link = request.POST.get('link')
+        id_get = request.POST.get('id')
         if (link in list_link):
             session = requests.Session()
             session.headers = {"User-Agent": "Googlebot/2.1 (+http://www.google.com/bot.html)"}
@@ -75,31 +77,39 @@ class Scrape(View):
             soup = BeautifulSoup(content, "html.parser")
             News = soup.find_all('div', {"class":"ArticleDetail w-660 d-ib"})
             for artical in News:
-                result = dict()
+                image = artical.find("img", {"class": ""})['src']
             
-                result['image'] = artical.find("img", {"class": ""})['src']
-            
-                result['title'] = artical.find("h1", {"class": "title f-22 c-3e"}).text
+                title = artical.find("h1", {"class": "title f-22 c-3e"}).text
 
-                result['text'] = artical.find("div", {"class": "ArticleContent"}).text
+                text = artical.find("div", {"class": "ArticleContent"}).text
 
-                result['author'] = artical.find("strong", {"class": ""}).text
+                author = artical.find("strong", {"class": ""}).text
 
-                result['time'] = artical.find("span", {"class": "ArticleDate"}).text
+                time = artical.find("span", {"class": "ArticleDate"}).text
 
-            if not Artical.objects.filter(title=result['title']):
-                ig = Artical()
-                ig.title =  result['title']
-                ig.image = result['image']
-                ig.author = result['author']
-                ig.time = result['time']
-                ig.text = result['text']
-                ig.save()
-                return render(request, 'mysite/scrape_detail.html', {'object_list': result})
+            if not Artical.objects.filter(title=title):
+                new_post = Artical()
+                new_post.id = id_get
+                new_post.image = image
+                new_post.title = title
+                new_post.text = text
+                new_post.author = author
+                new_post.time = time
+                new_post.save() 
+                headlines = Artical.objects.get(id = id_get )
+                context = {'object_list': headlines,}
+                return render(request, "mysite/scrape_detail.html", context) 
             else:
-                return render(request, 'mysite/scrape_detail.html', {'object_list': result})
-            
-   
+                headlines = Artical.objects.get(id = id_get )
+                context = {'object_list': headlines,}
+                return render(request, "mysite/scrape_detail.html", context) 
+
+def show_detail(request, id_get):
+    headlines = Artical.objects.get(id = id_get)
+    context = {'object_list': headlines,}
+    return render(request, "mysite/scrape_detail.html", context) 
+
+
 class HomeClass(View):
     def get(self, request):
         list_title = Title.objects.all()

@@ -22,12 +22,19 @@ class Title(models.Model):
 #-----------------------------------------------------------
 
 class Headline(models.Model):
+    id = models.IntegerField(primary_key=True)
     title = models.CharField(max_length=200)
     text = models.TextField()
     url = models.TextField()
     image = models.URLField(null=True, blank=True)
     author = models.TextField()
     time = models.TextField()
+    #----------------------------------
+    title_detail = models.CharField(max_length=200)
+    text_detail = models.TextField()
+    image_detail = models.URLField(null=True, blank=True)
+    author_detail = models.TextField()
+    time_detail = models.TextField()
     
     def __str__(self):
         return self.title
@@ -35,6 +42,7 @@ class Headline(models.Model):
 #---------------------------------------------------------
 
 class Artical(models.Model):
+    id = models.IntegerField(primary_key=True)
     title = models.CharField(max_length=200)
     text = models.TextField()
     image = models.URLField(null=True, blank=True)

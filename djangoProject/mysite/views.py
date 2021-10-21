@@ -13,57 +13,48 @@ import requests
 from bs4 import BeautifulSoup 
 # Create your views here.
 
-def scrape(request):
-    Headline.objects.all().delete()
-    session = requests.Session()
-    session.headers = {"User-Agent": "Googlebot/2.1 (+http://www.google.com/bot.html)"}
-    url = "https://vietnamnet.vn/vn/thoi-su/"
-    content = session.get(url).content
-    soup = BeautifulSoup(content, "html.parser")
-    News = soup.find_all('div', {"class":"clearfix item"})
-    for article in News:
-        linkx = article.find('a', {"class":"m-t-5 w-240 d-ib thumb left m-r-20"})
-        link=linkx['href']
-
-        imagex = article.find('img', {"class":"lazy"})
-        image = imagex['src']
-
-        titlex = article.find('a', {"class":"f-18 title"})
-        title = titlex.text
-    
-        authorx = article.find('a', {"class":"box-subcate-style4-namecate"})
-        author = authorx.text
-
-        timex = article.find('span', {"class":"time"})
-        time = timex.text
-
-        textx = article.find('div', {"class":"lead"})
-        text = textx.text
-
-        new_headline = Headline()
-        new_headline.title = title
-        new_headline.image = image
-        new_headline.author = author
-        new_headline.time = time
-        new_headline.text = text
-        new_headline.url = "https://vietnamnet.vn/"+link
-        new_headline.save()
-
-    headlines = Headline.objects.all()[::-1]
-    context = {'object_list': headlines,}
-    return render(request, "mysite/scrape.html", context) 
-'''  
-def news_list(request):
-    headlines = Headline.objects.all()[::-1]
-    context = {'object_list': headlines,}
-    return render(request, "mysite/scrape.html", context) '''
 
 class Scrape(View):
     def get(self, request):
         #Artical.objects.all().delete()
+        Headline.objects.all().delete()
+        session = requests.Session()
+        session.headers = {"User-Agent": "Googlebot/2.1 (+http://www.google.com/bot.html)"}
+        url = "https://vietnamnet.vn/vn/thoi-su/"
+        content = session.get(url).content
+        soup = BeautifulSoup(content, "html.parser")
+        News = soup.find_all('div', {"class":"clearfix item"})
+        for article in News:
+            linkx = article.find('a', {"class":"m-t-5 w-240 d-ib thumb left m-r-20"})
+            link=linkx['href']
+
+            imagex = article.find('img', {"class":"lazy"})
+            image = imagex['src']
+
+            titlex = article.find('a', {"class":"f-18 title"})
+            title = titlex.text
+        
+            authorx = article.find('a', {"class":"box-subcate-style4-namecate"})
+            author = authorx.text
+
+            timex = article.find('span', {"class":"time"})
+            time = timex.text
+
+            textx = article.find('div', {"class":"lead"})
+            text = textx.text
+
+            new_headline = Headline()
+            new_headline.title = title
+            new_headline.image = image
+            new_headline.author = author
+            new_headline.time = time
+            new_headline.text = text
+            new_headline.url = "https://vietnamnet.vn/"+link
+            new_headline.save()
+
         headlines = Headline.objects.all()[::-1]
         context = {'object_list': headlines,}
-        return render(request, "mysite/scrape.html", context)
+        return render(request, "mysite/scrape.html", context) 
 
     def post(self, request):
         list_link = Headline.objects.values_list('url', flat=True)

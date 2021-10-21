@@ -13,9 +13,6 @@ urlpatterns = [
     path('admin-site/', AdminView.as_view(), name="admin-site"),
     path('update/edit/<int:pk>', UpdatePost.as_view(), name="update_post"),
     path('delete/<int:pk>/remove', DeletePost.as_view(), name="delete_post"),
-    path('scraped', views.scrape, name="scrape"),
-    #path('reloaded/', views.news_list, name="another-web"),
-    #path('scrape_detail/', views.scrape_detail, name="scrape_detail"),
     path('scrape_detail/', Scrape.as_view(), name="scrape_detail"),
     path('post/<int:id_get>', views.show_detail, name="show_detail"),
 

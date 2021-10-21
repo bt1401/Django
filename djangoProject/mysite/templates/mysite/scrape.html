@@ -1,12 +1,12 @@
 {% extends 'mysite/base.html' %}
 
 {% block contentthang %}
-<h1>FROM THE OTHER SITE -----  <a href="{% url 'mysite:scrape' %}" class="load">LOAD NEWS |</a><a href="{% url 'mysite:scrape_detail' %}" class="load"> DETAIL </a><br/></h1>
+<h1>FROM THE OTHER SITE  <br/></h1>
     {% if object_list %}
         {% for object in object_list %}
             <div class = posts>
                 <div class="scrape-post">   
-                    <a class="title-link" href="{% url 'mysite:show_detail' object.id %}"><h2 class="card-title">{{object.title}}</h2></a>
+                    <a class="title-link"><h2 class="card-title">{{object.title}}</h2></a>
                     <p class="author-time">Đăng bởi: {{object.author}} ---  Thời gian: {{object.time}}</p>
                     <h3>{{object.text}}</h3>
                     <form method="post" action="">
@@ -18,7 +18,7 @@
                     <a class="link-artical" href="{% url 'mysite:show_detail' object.id %}">Post Detail by ID</a>
                 </div>
                 <div class="image-post">
-                    <a href="{{object.url}}" target="blank"  class="a-link">
+                    <a target="blank"  class="a-link">
                         <img class="" src = "{{ object.image }}">
                     </a>
                 </div>

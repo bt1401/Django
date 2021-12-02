@@ -87,13 +87,9 @@ class Scrape(View):
                 new_post.author = author
                 new_post.time = time
                 new_post.save() 
-                headlines = Artical.objects.get(id = id_get )
-                context = {'object_list': headlines,}
-                return render(request, "mysite/scrape_detail.html", context) 
+                return redirect(f'/post/{id_get}') 
             else:
-                headlines = Artical.objects.get(id = id_get )
-                context = {'object_list': headlines,}
-                return render(request, "mysite/scrape_detail.html", context) 
+                return redirect(f'/post/{id_get}') 
 
 def show_detail(request, id_get):
     headlines = Artical.objects.get(id = id_get)
